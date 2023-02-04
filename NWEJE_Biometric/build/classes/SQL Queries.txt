@@ -1,0 +1,16 @@
+COURSE LIST TABLE
+*************************************
+INSERT INTO `biometric_attendance_schema`.`course_list`
+(`course_code`,
+`course_name`,
+`department`)
+VALUES
+("CSC 101","Introduction to Computer Science","Computer Science"),
+("CSC 205","Operating System I","Computer Science"),
+("EEE 301","Electronic Circuits I (Analogue)","Electrical"),
+("EEE 303","Electric Circuit Theory I ","Electrical"),
+("MEE 307","Theory of Machines I ","Mechanical"),
+("MEE 309","Thermodynamics -II ","Mechanical"),
+("PHY 101","General Physics I (Mechanics & Properties of Matter)","Basic Science"),
+("CHM 101","General Physics Practical I ","Basic Science"),
+("MTH 101","Elementary Mathematics I (Algebra & Trigonometry) ","Basic Science");
