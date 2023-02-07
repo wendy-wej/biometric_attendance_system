@@ -156,7 +156,7 @@ public class hod_work_page extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Matric No", "Percentage Attendance"
+                "Name", "Matric No", "Percentage Attendance", "Concession?"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -693,12 +693,13 @@ public class hod_work_page extends javax.swing.JFrame {
                     while (rs3.next()) {
                         if(total_classes_no > 0){
                             int attend_count = Integer.parseInt(rs3.getString(9));
-                            int personal_perc_attend = (attend_count/total_classes_no)*100;
+                            //int personal_perc_attend = (attend_count/total_classes_no)*100;
+                            int personal_perc_attend = (int) ((double) attend_count / total_classes_no * 100);
                             String perc_attend = personal_perc_attend + "%";
-                            td.addRow(new Object[] {rs3.getString(2), rs3.getString(1), perc_attend});
+                            td.addRow(new Object[] {rs3.getString(2), rs3.getString(1), perc_attend, rs3.getString(8)});
                         }else{
                             String zero_attend = "0";
-                            td.addRow(new Object[] {rs3.getString(2), rs3.getString(1), zero_attend});
+                            td.addRow(new Object[] {rs3.getString(2), rs3.getString(1), zero_attend, rs3.getString(8)});
                         } 
                     } 
                 }catch(Exception e){

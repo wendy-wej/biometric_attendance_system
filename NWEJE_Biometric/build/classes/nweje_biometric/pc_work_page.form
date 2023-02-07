@@ -480,7 +480,7 @@
                                   <Component id="jComboBox4" min="-2" pref="193" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jScrollPane3" min="-2" pref="757" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="247" max="-2" attributes="0"/>
@@ -491,7 +491,7 @@
                               <Component id="jButton9" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="432" max="32767" attributes="0"/>
+                      <EmptySpace pref="127" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -643,10 +643,11 @@
                 <Component class="javax.swing.JTable" name="jTable2">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="3" rowCount="0">
+                      <Table columnCount="4" rowCount="0">
                         <Column editable="true" title="Course Name" type="java.lang.Object"/>
                         <Column editable="true" title="Course Code" type="java.lang.Object"/>
                         <Column editable="true" title="Percentage Attendance" type="java.lang.Object"/>
+                        <Column editable="true" title="Concession?" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>

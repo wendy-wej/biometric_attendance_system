@@ -602,7 +602,7 @@ public class pc_work_page extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Course Name", "Course Code", "Percentage Attendance"
+                "Course Name", "Course Code", "Percentage Attendance", "Concession?"
             }
         ));
         jScrollPane3.setViewportView(jTable2);
@@ -668,7 +668,7 @@ public class pc_work_page extends javax.swing.JFrame {
                             .addComponent(jLabel46)
                             .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(247, 247, 247)
                         .addComponent(jLabel11)
@@ -676,7 +676,7 @@ public class pc_work_page extends javax.swing.JFrame {
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jButton9)))
-                .addContainerGap(432, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1352,10 +1352,10 @@ public class pc_work_page extends javax.swing.JFrame {
                             int personal_perc_attend = (int) ((double) attend_count / total_classes_no * 100);
 
                             String perc_attend = personal_perc_attend + "%";
-                            td.addRow(new Object[] {rs2.getString(5), rs2.getString(6), perc_attend});
+                            td.addRow(new Object[] {rs2.getString(5), rs2.getString(6), perc_attend, rs2.getString(8)});
                         }else{
                             String zero_attend = "0%";
-                            td.addRow(new Object[] {rs2.getString(5), rs2.getString(6), zero_attend});
+                            td.addRow(new Object[] {rs2.getString(5), rs2.getString(6), zero_attend, rs2.getString(8)});
                         } 
                     } 
                 }catch(Exception e){

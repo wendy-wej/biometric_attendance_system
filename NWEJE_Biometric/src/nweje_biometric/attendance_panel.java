@@ -293,7 +293,7 @@ public class attendance_panel extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton2.setText("Close Attendance");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -351,7 +351,7 @@ public class attendance_panel extends javax.swing.JFrame {
 
         jLabel20.setText("jLabel20");
 
-        jLabel21.setText("jLabel21");
+        jLabel21.setText("Period");
 
         jLabel22.setText("Department");
 
@@ -607,7 +607,7 @@ public class attendance_panel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Problem with closing Attendance"); 
             System.err.println(e);
         }
-        
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

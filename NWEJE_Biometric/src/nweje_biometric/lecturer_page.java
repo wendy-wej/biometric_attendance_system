@@ -14,11 +14,11 @@ import java.util.Random;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 
 /**
  *
@@ -32,8 +32,8 @@ public class lecturer_page extends javax.swing.JFrame {
     public lecturer_page() {
         initComponents();
         showDetails();
-        time tt=new time();
-        Thread t1=new Thread(tt);
+        time tt = new time();
+        Thread t1 = new Thread(tt);
         t1.start();
     }
 
@@ -47,27 +47,26 @@ public class lecturer_page extends javax.swing.JFrame {
     // generate a random 4-digit number
     int randomNumber = random.nextInt(9000) + 1000; //generates a number from 1-8999, then add 1000 to it
     String lesson_id = Integer.toString(randomNumber);
-    
-    
-    public void showDetails(){
+
+    public void showDetails() {
         String staff_id = (String) jLabel4.getText();
         //System.out.println(staff_id);
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             DefaultComboBoxModel model = (DefaultComboBoxModel) jComboBox1.getModel();
             DefaultComboBoxModel model2 = (DefaultComboBoxModel) jComboBox2.getModel();
             DefaultComboBoxModel model3 = (DefaultComboBoxModel) jComboBox3.getModel();
             DefaultComboBoxModel model4 = (DefaultComboBoxModel) jComboBox4.getModel();
-            
+
             model.removeAllElements();
             model2.removeAllElements();
             model3.removeAllElements();
             model4.removeAllElements();
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps = con.prepareStatement("select * from lecturer_allocation where staff_id = ?");
-            
+
             ps.setString(1, staff_id);
-         
+
             ResultSet rs = ps.executeQuery();
             //System.out.println("Before loop");
             while (rs.next()) {
@@ -76,15 +75,15 @@ public class lecturer_page extends javax.swing.JFrame {
                 //System.out.println(" In the efore loop");
                 String course_name = rs.getString(2);
                 String course_code = rs.getString(3);
-                
+
                 jLabel9.setText(course_name);
                 jLabel12.setText(course_name);
                 jLabel18.setText(course_name);
-                
+
                 jLabel23.setText(course_code);
                 jLabel14.setText(course_code);
                 jLabel19.setText(course_code);
-                
+
                 model.addElement(allocate_id);
                 model2.addElement(allocate_id);
                 model3.addElement(allocate_id);
@@ -93,25 +92,46 @@ public class lecturer_page extends javax.swing.JFrame {
             }
 
             con.close();
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.err.println(e);
-        } 
-   }
-        public void openAttendancePanel(){
-            String alloc_id = (String) jComboBox1.getSelectedItem();
-            String dept = (String) jLabel6.getText();
-            String period = (String) jComboBox5.getSelectedItem();
-        
-            attendance_panel ap = new attendance_panel();
-            ap.jLabel9.setText(alloc_id);
-            ap.jLabel10.setText(dept);
-            ap.jLabel16.setText(lesson_id);
-            ap.jLabel20.setText(period);
-            ap.show();
-            ap.setVisible(true);
-            dispose();
         }
+    }
+
+    public void openAttendancePanel() {
+        String alloc_id = (String) jComboBox1.getSelectedItem();
+        String dept = (String) jLabel6.getText();
+        String period = (String) jComboBox5.getSelectedItem();
+
+        attendance_panel ap = new attendance_panel();
+        ap.jLabel9.setText(alloc_id);
+        ap.jLabel10.setText(dept);
+        ap.jLabel16.setText(lesson_id);
+        ap.jLabel20.setText(period);
+        ap.show();
+        ap.setVisible(true);
+        //dispose();
+    }
+
+    public void openSpecialAttendancePanel() {
+        int row_index = jTable1.getSelectedRow();
+        DefaultTableModel td = (DefaultTableModel) jTable1.getModel();
+
+        String alloc_id = (String) jComboBox2.getSelectedItem();
+        String dept = (String) jLabel6.getText();
+        String lesson_id = td.getValueAt(row_index, 0).toString();
+        String period = td.getValueAt(row_index, 5).toString();
+
+        attendance_panel ap = new attendance_panel();
+        ap.jLabel9.setText(alloc_id);
+        ap.jLabel10.setText(dept);
+        ap.jLabel16.setText(lesson_id);
+        ap.jLabel20.setText(period);
+        ap.show();
+        ap.setVisible(true);
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -140,6 +160,18 @@ public class lecturer_page extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
+        jButton7 = new javax.swing.JButton();
+        jLabel27 = new javax.swing.JLabel();
+        jComboBox6 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -150,15 +182,6 @@ public class lecturer_page extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -235,7 +258,7 @@ public class lecturer_page extends javax.swing.JFrame {
                                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(445, Short.MAX_VALUE))
+                .addContainerGap(808, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,13 +294,10 @@ public class lecturer_page extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Lesson ID", "Time Opened", "Time Closed", "Period"
+                "Lesson ID", "Date Opened", "Time Opened", "Date Closed", "Time Closed", "Period"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -294,12 +314,22 @@ public class lecturer_page extends javax.swing.JFrame {
         jLabel12.setText("jLabel12");
 
         jButton3.setText("Take Attendance");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Course Code");
 
         jLabel14.setText("jLabel14");
 
         jButton4.setText("View All Lessons");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -319,18 +349,19 @@ public class lecturer_page extends javax.swing.JFrame {
                             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton3))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
@@ -341,19 +372,121 @@ public class lecturer_page extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14))
+                        .addGap(64, 64, 64)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton4)))
-                .addContainerGap(125, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)))
+                .addComponent(jButton3)
+                .addGap(44, 44, 44))
         );
 
         jTabbedPane1.addTab("Special Attendance", jPanel2);
+
+        jLabel20.setText("Enter Student Matric No");
+
+        jLabel21.setText("Select Allocation ID");
+
+        jButton6.setText("Remove Attendance");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Matric No", "Date In", "Time In", "Allocate_ID", "Student Lname", "Lesson ID", "Period"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable3);
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton7.setText("Search Lessons");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel27.setText(" Department");
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science", "Electrical", "Mechanical" }));
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton7)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel27)
+                                    .addComponent(jLabel21))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                                    .addComponent(jComboBox6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jButton2)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton6)
+                .addGap(53, 53, 53))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
+                .addGap(39, 39, 39)
+                .addComponent(jButton7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(69, 69, 69))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
+                .addGap(35, 35, 35))
+        );
+
+        jTabbedPane1.addTab("Remove Student Attendance", jPanel4);
 
         jLabel15.setText("Select Allocation ID");
 
@@ -362,7 +495,7 @@ public class lecturer_page extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Student Name", "Matric No", "Percentage Attendance"
+                "Student Name", "Matric No", "Percentage Attendance", "Concession?"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -401,16 +534,16 @@ public class lecturer_page extends javax.swing.JFrame {
                             .addComponent(jLabel15)
                             .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGap(75, 75, 75)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
-                            .addComponent(jLabel19)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(262, 262, 262)
                         .addComponent(jButton5)))
-                .addGap(72, 72, 72)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -432,94 +565,18 @@ public class lecturer_page extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jLabel19))
-                .addGap(40, 40, 40)
+                .addGap(33, 33, 33)
                 .addComponent(jButton5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("View Attendance", jPanel3);
 
-        jLabel20.setText("Enter Student Matric No");
-
-        jLabel21.setText("Select Allocation ID");
-
-        jButton6.setText("Remove Attendance");
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Lesson ID", "Period", "Date Opened"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable3);
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jTextField1.setText("jTextField1");
-
-        jButton7.setText("Search Lessons");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel21)
-                            .addGap(39, 39, 39)
-                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel20)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6)
-                .addGap(53, 53, 53))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel21)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addComponent(jButton7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton6)
-                .addGap(35, 35, 35))
-        );
-
-        jTabbedPane1.addTab("Remove Student Attendance", jPanel4);
-
         jLabel1.setText(" Name");
 
         jLabel2.setText("jLabel2");
 
         jLabel3.setText("Staff ID");
-
-        jLabel4.setText("1002");
 
         jLabel5.setText("Department");
 
@@ -531,21 +588,23 @@ public class lecturer_page extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2))
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel2)
+                        .addGap(187, 187, 187)
+                        .addComponent(jLabel5)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel6))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(29, 29, 29)
-                        .addComponent(jLabel4)))
-                .addGap(71, 71, 71)
-                .addComponent(jLabel5)
-                .addGap(29, 29, 29)
-                .addComponent(jLabel6)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jTabbedPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -557,10 +616,10 @@ public class lecturer_page extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -569,14 +628,14 @@ public class lecturer_page extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        
+
         try {
             String alloc_id = (String) jComboBox1.getSelectedItem();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps3 = con3.prepareStatement("select course_name, course_code from lecturer_allocation where allocate_id = ?");
-         
-            ps3.setString(1, alloc_id);  
+
+            ps3.setString(1, alloc_id);
             ResultSet rs3 = ps3.executeQuery();
             //System.out.println("Before loop");
             while (rs3.next()) {
@@ -586,7 +645,7 @@ public class lecturer_page extends javax.swing.JFrame {
                 //System.out.println("course_code: " + c_code);
                 jLabel9.setText(c_name);
                 jLabel23.setText(c_code);
-            }    
+            }
             con3.close();
         } catch (Exception e) {
             System.err.println(e);
@@ -600,8 +659,8 @@ public class lecturer_page extends javax.swing.JFrame {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps3 = con3.prepareStatement("select course_name, course_code from lecturer_allocation where allocate_id = ?");
-         
-            ps3.setString(1, alloc_id);  
+
+            ps3.setString(1, alloc_id);
             ResultSet rs3 = ps3.executeQuery();
             //System.out.println("Before loop");
             while (rs3.next()) {
@@ -611,7 +670,7 @@ public class lecturer_page extends javax.swing.JFrame {
                 //System.out.println("course_code: " + c_code);
                 jLabel12.setText(c_name);
                 jLabel14.setText(c_code);
-            }    
+            }
             con3.close();
         } catch (Exception e) {
             System.err.println(e);
@@ -625,8 +684,8 @@ public class lecturer_page extends javax.swing.JFrame {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps3 = con3.prepareStatement("select course_name, course_code from lecturer_allocation where allocate_id = ?");
-         
-            ps3.setString(1, alloc_id);  
+
+            ps3.setString(1, alloc_id);
             ResultSet rs3 = ps3.executeQuery();
             //System.out.println("Before loop");
             while (rs3.next()) {
@@ -636,7 +695,7 @@ public class lecturer_page extends javax.swing.JFrame {
                 //System.out.println("course_code: " + c_code);
                 jLabel18.setText(c_name);
                 jLabel19.setText(c_code);
-            }    
+            }
             con3.close();
         } catch (Exception e) {
             System.err.println(e);
@@ -646,118 +705,122 @@ public class lecturer_page extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         //INSERT INTO LESSON
-        try{
-            
-            
+        try {
+
             //getting Today's date
             LocalDate today = LocalDate.now();
             //SimpleDateFormat dat = new SimpleDateFormat("yyyy-MM-dd");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             //wrong format: "dd-MM-yyyy"
             String alloc_id = (String) jComboBox1.getSelectedItem();
-            
+
             String date_opened = today.format(formatter);
             String time_opened = (String) jLabel25.getText();
             String period = (String) jComboBox5.getSelectedItem();
-         
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps = con.prepareStatement("insert into lesson_table(allocate_id, lesson_id, date_opened, time_opened, period) values (?,?,?,?,?)");
-         
+
             ps.setString(1, alloc_id);
             ps.setString(2, lesson_id);
             ps.setString(3, date_opened);
             ps.setString(4, time_opened);
             ps.setString(5, period);
-            
+
             int rs = ps.executeUpdate();
-            
-            JOptionPane.showMessageDialog(rootPane, alloc_id+ " " + lesson_id + " has been inserted into 'Lesson Table' ");           
-            con.close();          
-        }catch(Exception e){
+
+            JOptionPane.showMessageDialog(rootPane, alloc_id + " " + lesson_id + " has been inserted into 'Lesson Table' ");
+            con.close();
+        } catch (Exception e) {
             System.err.println(e);
             JOptionPane.showMessageDialog(rootPane, "Error with Lesson Database");
         }
-    
-
 
         //INSERT INTO LESSON_COUNT
-        try{
+        try {
             String alloc_id = (String) jComboBox1.getSelectedItem();
             Class.forName("com.mysql.cj.jdbc.Driver");
             //System.out.println("line before prepared statement ");
             Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps2 = con2.prepareStatement("select lesson_counter from lesson_count where allocate_id = ?");
-            
-            ps2.setString(1, alloc_id);  
+
+            ps2.setString(1, alloc_id);
             ResultSet rs2 = ps2.executeQuery();
             while (rs2.next()) {
                 int l_counter = rs2.getInt("lesson_counter");
                 System.out.println("lesson_counter before increment: " + l_counter);
-                
+
                 int new_l_counter = l_counter + 1;
-                try{
+                try {
                     PreparedStatement ps3 = con2.prepareStatement("update lesson_count set lesson_counter=? where allocate_id = ?");
                     ps3.setInt(1, new_l_counter);
                     ps3.setString(2, alloc_id);
                     int rs = ps3.executeUpdate();
-                    
-                }catch(Exception e){
+
+                } catch (Exception e) {
                     System.err.println(e);
                     JOptionPane.showMessageDialog(rootPane, "Error with adding into 'lesson count' Database");
                 }
-                
+
             }
-           con2.close();
-        }catch(Exception e){
+            con2.close();
+        } catch (Exception e) {
             System.err.println(e);
             JOptionPane.showMessageDialog(rootPane, "Error with Lesson Count Database");
         }
-        
+
         //OPENING ATTENDANCE PANEL
         openAttendancePanel();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        try{
-            
+        try {
+
             String alloc_id = (String) jComboBox3.getSelectedItem();
             Class.forName("com.mysql.cj.jdbc.Driver");
-            DefaultTableModel td = (DefaultTableModel)jTable2.getModel();
+            DefaultTableModel td = (DefaultTableModel) jTable2.getModel();
             Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps2 = con2.prepareStatement("select lesson_counter from lesson_count where allocate_id = ?");
-            System.out.println("first alloc:"+ alloc_id);
-            ps2.setString(1, alloc_id);  
+            System.out.println("first alloc:" + alloc_id);
+            ps2.setString(1, alloc_id);
             ResultSet rs2 = ps2.executeQuery();
-            
+
             while (rs2.next()) {
                 int total_classes_no = rs2.getInt("lesson_counter");
-                try{
+                //System.out.println("total_classes_no: " + total_classes_no);
+                try {
                     PreparedStatement ps3 = con2.prepareStatement("select * from course_registration_list where allocation_id = ?");
                     String alloc_idi = (String) jComboBox3.getSelectedItem();
                     ps3.setString(1, alloc_idi);
-                     System.out.println("second alloc:"+ alloc_idi);
+                    
                     ResultSet rs3 = ps3.executeQuery();
                     while (rs3.next()) {
-                        if(total_classes_no > 0){
+                        System.out.println(rs3.getString(2) +" attend count : "+ rs3.getString(9));
+                        System.out.println("total_classes_no: " + total_classes_no);
+                        if (total_classes_no > 0) {
                             int attend_count = Integer.parseInt(rs3.getString(9));
-                            int personal_perc_attend = (attend_count/total_classes_no)*100;
+                            System.out.println(rs3.getString(2) +" attend count : "+ attend_count);
+                            //int personal_perc_attend = (attend_count / total_classes_no) * 100;
+                            int personal_perc_attend = (int) ((double) attend_count / total_classes_no * 100);
                             String perc_attend = personal_perc_attend + "%";
-                            td.addRow(new Object[] {rs3.getString(2), rs3.getString(1), perc_attend});
-                        }else{
+                            
+                            td.addRow(new Object[]{rs3.getString(2), rs3.getString(1), perc_attend, rs3.getString(8) });
+                        } else {
                             String zero_attend = "0";
-                            td.addRow(new Object[] {rs3.getString(2), rs3.getString(1), zero_attend});
+                            System.out.println(rs3.getString(2) +": "+ zero_attend);
+                            td.addRow(new Object[]{rs3.getString(2), rs3.getString(1), zero_attend, rs3.getString(8)});
                         }
-                    } 
-                }catch(Exception e){
+                    }
+                } catch (Exception e) {
                     System.err.println(e);
                     JOptionPane.showMessageDialog(rootPane, "Error with adding into 'lesson count' Database");
                 }
-                
+
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.err.println(e);
             JOptionPane.showMessageDialog(rootPane, "Error viewing Attendance");
         }
@@ -768,30 +831,290 @@ public class lecturer_page extends javax.swing.JFrame {
         showDetails();
     }//GEN-LAST:event_formWindowOpened
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        try {
+            String alloc_id = (String) jComboBox2.getSelectedItem();
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            DefaultTableModel td = (DefaultTableModel) jTable1.getModel();
+            Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps3 = con3.prepareStatement("select * from lesson_table where allocate_id = ?");
+            ps3.setString(1, alloc_id);
+            ResultSet rs3 = ps3.executeQuery();
+            while (rs3.next()) {
+                td.addRow(new Object[]{rs3.getString(2), rs3.getString(3), rs3.getString(4), rs3.getString(6), rs3.getString(7), rs3.getString(5)});
+            }
+            con3.close();
+        } catch (Exception e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(rootPane, "Error retrieving all lessons from 'lessons' table");
+        }
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int row_index = jTable1.getSelectedRow();
+        if (row_index != -1) {
+            DefaultTableModel td = (DefaultTableModel) jTable1.getModel();
+            String lesson_id = td.getValueAt(row_index, 0).toString();
+
+            
+            //OPENING ATTENDANCE PANEL
+            openSpecialAttendancePanel();
+
+        } else {
+            System.err.println("Invalid Row Selected for Special Attendance");
+            JOptionPane.showMessageDialog(rootPane, "Invalid Row Selected for Special Attendance");
+        }
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        String mat_no = (String) jTextField1.getText();
+        String alloc_id = (String) jComboBox4.getSelectedItem();
+        
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //System.out.println("line before prepared statement ");
+            DefaultTableModel td = (DefaultTableModel) jTable3.getModel();
+            Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps2 = con2.prepareStatement("select * from course_registration_list where matric_no =? and allocation_id = ?");
+            ps2.setString(1, mat_no);
+            ps2.setString(2, alloc_id);  
+            ResultSet rs2 = ps2.executeQuery();
+            
+            //String dept = rs2.getString(3);
+            if (rs2.next()) {           
+                String dept = rs2.getString(3);
+                    if (dept.contains("Electrical")){
+                        PreparedStatement ps4 = con2.prepareStatement("select * from expanded_electrical_attendance where matric_no =? and allocate_id = ?");
+                        ps4.setString(1, mat_no);
+                        ps4.setString(2, alloc_id);  
+                        ResultSet rs4 = ps4.executeQuery();
+                        while (rs4.next()) {
+                            td.addRow(new Object[]{rs4.getString(1), rs4.getString(2), rs4.getString(3), rs4.getString(4), rs4.getString(5), rs4.getString(6), rs4.getString(7)});
+                        }
+                        System.out.println("retrieved from expanded_electrical_attendance");
+                        
+                    }else if (dept.contains("Mechanical")){
+                        PreparedStatement ps4 = con2.prepareStatement("select * from expanded_mechanical_attendance where matric_no =? and allocate_id = ?");
+                        ps4.setString(1, mat_no);
+                        ps4.setString(2, alloc_id);  
+                        ResultSet rs4 = ps4.executeQuery();
+                        while (rs4.next()) {
+                            td.addRow(new Object[]{rs4.getString(1), rs4.getString(2), rs4.getString(3), rs4.getString(4), rs4.getString(5), rs4.getString(6), rs4.getString(7)});
+                        }
+                        System.out.println("retrieved from expanded_mechanical_attendance");
+                        
+                    }else if (dept.contains("Computer Science")){
+                        PreparedStatement ps4 = con2.prepareStatement("select * from expanded_computer_science_attendance where matric_no =? and allocate_id = ?");
+                        ps4.setString(1, mat_no);
+                        ps4.setString(2, alloc_id);  
+                        ResultSet rs4 = ps4.executeQuery();
+                        while (rs4.next()) {
+                            td.addRow(new Object[]{rs4.getString(1), rs4.getString(2), rs4.getString(3), rs4.getString(4), rs4.getString(5), rs4.getString(6), rs4.getString(7)});
+                        }
+                        System.out.println("retrieved from expanded_computer_science_attendance");
+                        
+                    } else{
+                        JOptionPane.showMessageDialog(rootPane, "Student is not registered");
+                    }  
+            
+                    //PreparedStatement ps4 = con2.prepareStatement("insert into log_table values (?,?,?,?)");
+                    
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "You are not enrolled for this course");
+            }  
+            con2.close();
+        }catch(Exception e){
+            System.err.println(e);
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, "Error!!!!");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        
+        //EXPANDED TABLE
+        int row_index = jTable3.getSelectedRow();
+        if (row_index != -1) {
+            DefaultTableModel td = (DefaultTableModel) jTable3.getModel();
+            String mat_no = td.getValueAt(row_index, 0).toString();
+            String lesson_id = td.getValueAt(row_index, 5).toString();
+            String alloc_id = (String) jComboBox4.getSelectedItem();
+            try {
+                Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+                PreparedStatement ps2 = con2.prepareStatement("select * from course_registration_list where matric_no =? and allocation_id = ?");
+                ps2.setString(1, mat_no);
+                ps2.setString(2, alloc_id);
+                ResultSet rs2 = ps2.executeQuery();
+
+                //String dept = rs2.getString(3);
+                if (rs2.next()) {
+                    String dept = rs2.getString(3);
+                    if (dept.contains("Electrical")) {
+                        PreparedStatement ps4 = con2.prepareStatement("delete from expanded_electrical_attendance where matric_no =? and allocate_id = ? and lesson_id=?");
+                        ps4.setString(1, mat_no);
+                        ps4.setString(2, alloc_id);
+                        ps4.setString(3, lesson_id);
+                        int rs4 = ps4.executeUpdate();
+                        JOptionPane.showMessageDialog(rootPane, mat_no +" with lession id of "+ lesson_id+ " has been deleted from 'expanded_electrical_attendance' table");
+                        System.out.println("delected from expanded_electrical_attendance");
+
+                    } else if (dept.contains("Mechanical")) {
+                        PreparedStatement ps4 = con2.prepareStatement("delete from expanded_mechanical_attendance where matric_no =? and allocate_id = ? and lesson_id=?");
+                        ps4.setString(1, mat_no);
+                        ps4.setString(2, alloc_id);
+                        ps4.setString(3, lesson_id);
+                        int rs4 = ps4.executeUpdate();
+                        JOptionPane.showMessageDialog(rootPane, mat_no +" with lession id of "+ lesson_id+ "has been deleted from 'expanded_mechanical_attendance' table");
+                        System.out.println("delected from expanded_mechanical_attendance");
+
+                    } else if (dept.contains("Computer Science")) {
+                        PreparedStatement ps4 = con2.prepareStatement("delete from expanded_computer_science_attendance where matric_no =? and allocate_id = ? and lesson_id=?");
+                        ps4.setString(1, mat_no);
+                        ps4.setString(2, alloc_id);
+                        ps4.setString(3, lesson_id);
+                        int rs4 = ps4.executeUpdate();
+                        JOptionPane.showMessageDialog(rootPane, mat_no +" with lession id of "+ lesson_id+ "has been deleted from 'expanded_computer_science_attendance' table");
+                        System.out.println("delected from expanded_computer_science_attendance");
+
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Student is not registered");
+                        System.out.println("Student is not registered");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "You are not enrolled for this course");
+                    System.out.println("You are not enrolled for this course");
+                }
+                con2.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Error deleting from expanded table");
+                System.out.println("Error deleting from expanded table");
+                System.out.println(e);
+                //e.printStackTrace();
+            }
+
+        } else {
+            System.err.println("Invalid Row Selected for Remove Attendance");
+            JOptionPane.showMessageDialog(rootPane, "Invalid Row Selected for Remove Attendance");
+        }
+        
+        //CONDENSED ATTENDANCE COUNT
+        try{
+            DefaultTableModel td = (DefaultTableModel) jTable3.getModel();
+            String mat_no = td.getValueAt(row_index, 0).toString();
+            //String lesson_id = td.getValueAt(row_index, 5).toString();
+            String alloc_id = (String) jComboBox4.getSelectedItem();
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps2 = con2.prepareStatement("select * from course_registration_list where matric_no =? and allocation_id = ?");
+            ps2.setString(1, mat_no);
+            ps2.setString(2, alloc_id);  
+            ResultSet rs2 = ps2.executeQuery();
+            
+            
+            if (rs2.next()) {
+                
+                int old_counter = rs2.getInt(9);
+                System.out.println("old_counter: " +old_counter);
+                int new_counter = old_counter -1;
+                System.out.println("new_counter: " +new_counter); 
+                JOptionPane.showMessageDialog(rootPane, "Attendance count for "+ mat_no+ " is now: "+ new_counter);
+                
+                try{
+                    PreparedStatement ps3 = con2.prepareStatement("update course_registration_list set attend_count=? where matric_no = ? and allocation_id = ?");
+                    ps3.setInt(1, new_counter);
+                    ps3.setString(2, mat_no);
+                    ps3.setString(3, alloc_id);
+                    int rs = ps3.executeUpdate();
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(rootPane, "Error storing updated 'attend_count' in 'course_registration_table'");
+                    System.out.println("Error storing updated 'attend_count' in 'course_registration_table'");
+                    System.out.println(e);
+                    //e.printStackTrace();
+                }
+            }
+        }catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Error deleting from expanded table");
+                System.out.println(e);
+                e.printStackTrace();
+            }
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try{
+            int row_index = jTable3.getSelectedRow();
+            DefaultTableModel td = (DefaultTableModel) jTable3.getModel();
+            String mat_no = td.getValueAt(row_index, 0).toString();
+            //String lesson_id = td.getValueAt(row_index, 5).toString();
+            String alloc_id = (String) jComboBox4.getSelectedItem();
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps2 = con2.prepareStatement("select * from course_registration_list where matric_no =? and allocation_id = ?");
+            ps2.setString(1, mat_no);
+            ps2.setString(2, alloc_id);  
+            ResultSet rs2 = ps2.executeQuery();
+            
+            
+            if (rs2.next()) {
+                
+                int old_counter = rs2.getInt(9);
+                System.out.println("old_counter: " +old_counter);
+                int new_counter = old_counter +1;
+                System.out.println("new_counter: " +new_counter); 
+                JOptionPane.showMessageDialog(rootPane, "Attendance count for "+ mat_no+ " is now: "+ new_counter);
+                
+                try{
+                    PreparedStatement ps3 = con2.prepareStatement("update course_registration_list set attend_count=? where matric_no = ? and allocation_id = ?");
+                    ps3.setInt(1, new_counter);
+                    ps3.setString(2, mat_no);
+                    ps3.setString(3, alloc_id);
+                    int rs = ps3.executeUpdate();
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(rootPane, "Error storing updated 'attend_count' in 'course_registration_table'");
+                    System.out.println("Error storing updated 'attend_count' in 'course_registration_table'");
+                    System.out.println(e);
+                    //e.printStackTrace();
+                }
+            }
+        }catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Error deleting from expanded table");
+                System.out.println(e);
+                e.printStackTrace();
+            }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public  class  time implements Runnable{
+    public class time implements Runnable {
 
         @Override
         public void run() {
-              try {
-        for(int i=1; i<2;i--){
-        Calendar calendar = Calendar.getInstance();
-        java.sql.Date cal = new java.sql.Date(calendar.getTime().getTime());
-        cal.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
-        //jLabel9.setText(sdf.format(cal.getTime()));
-        jLabel25.setText(sdf.format(cal.getTime()));
-                Thread.sleep(10);
-            }
+            try {
+                for (int i = 1; i < 2; i--) {
+                    Calendar calendar = Calendar.getInstance();
+                    java.sql.Date cal = new java.sql.Date(calendar.getTime().getTime());
+                    cal.getTime();
+                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
+                    //jLabel9.setText(sdf.format(cal.getTime()));
+                    jLabel25.setText(sdf.format(cal.getTime()));
+                    Thread.sleep(10);
+                }
             } catch (Exception e) {
                 System.out.println("error");
-            }       
+            }
         }
     }
-
-
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -827,6 +1150,7 @@ public class lecturer_page extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -837,6 +1161,7 @@ public class lecturer_page extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -856,6 +1181,7 @@ public class lecturer_page extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     public static javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
