@@ -100,6 +100,7 @@ public class pc_capture extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 51, 102));
 
         jButton1.setText("Take Photo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +123,7 @@ public class pc_capture extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(18, 39, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );

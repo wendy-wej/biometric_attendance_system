@@ -14,3 +14,14 @@ VALUES
 ("PHY 101","General Physics I (Mechanics & Properties of Matter)","Basic Science"),
 ("CHM 101","General Physics Practical I ","Basic Science"),
 ("MTH 101","Elementary Mathematics I (Algebra & Trigonometry) ","Basic Science");
+
+expanded_electrical_attendance
+*****************************************
+CREATE TABLE `biometric_attendance_schema`.`expanded_electrical_attendance` (
+  `matric_no` VARCHAR(45) NOT NULL,
+  `time_in` DATETIME NULL,
+  `allocate_id` VARCHAR(45) NULL,
+  `student_lname` VARCHAR(45) NULL,
+  `session_id` VARCHAR(45) NULL,
+  `period` VARCHAR(45) NULL,
+  `level` VARCHAR(45) NULL);

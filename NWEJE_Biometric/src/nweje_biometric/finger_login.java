@@ -40,10 +40,10 @@ public class finger_login extends javax.swing.JFrame {
     /**
      * Creates new form finger_login
      */
-    public static String role = null;
-    public static String staff_id = null;
-    public static String full_name = null;
-    public static String dept = null;
+   // public static String role = null;
+   // public static String staff_id = null;
+   // public static String full_name = null;
+   // public static String dept = null;
     
     private DPFPCapture Reader = DPFPGlobal.getCaptureFactory().createCapture();
     private DPFPEnrollment CaptureFingerPrint = DPFPGlobal.getEnrollmentFactory().createEnrollment();
@@ -54,7 +54,7 @@ public class finger_login extends javax.swing.JFrame {
     public finger_login() {
         initComponents();
         StartDigitaPersonaRetrieve();
-        stop();
+        //stop();
         start();
     }
 
@@ -216,77 +216,104 @@ public class finger_login extends javax.swing.JFrame {
 
     public void IdentifyFingerPrint() {
         boolean found = false;
-
+String a1=null;
+String a2=null;
+String a3=null;
+String a4=null;
+String a5=null;
+String a6=null;
+String a7=null;
+String a8=null;
+String a9=null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps = con.prepareStatement("SELECT * FROM staff_register_list");
             ResultSet rs = ps.executeQuery();
+              System.out.println("Before rs.next");
             while (rs.next()) {
+                 System.out.println("Inside rs.next");
+                    a1= rs.getString(1);
+                    a2=rs.getString(2);
+                    a3=rs.getString(3);
+                    a4=rs.getString(4);
+                    a5=rs.getString(5);
                 byte templateBuffer[] = rs.getBytes(7);
-                DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
-                setTemplate(referenceTemplate);
-                DPFPVerificationResult result = Checker.verify(FingerPrintFeatureVerification, getTemplate());
+                if(templateBuffer!=null){
+                    System.out.println("Inside rs.next 2");
+                    DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
+                    setTemplate(referenceTemplate);
 
-                if (result.isVerified()) {
-                    found = true;
-                    jLabel2.setText(rs.getString(2));
-                    jLabel3.setText(rs.getString(3));
-                    staff_id = rs.getString(1);
-                    role = rs.getString(4);
-                    dept = rs.getString(5); 
-                    JOptionPane.showMessageDialog(rootPane, "Welcome "+ rs.getString(2) + " "+ rs.getString(3) +". Account signed in");
+                    DPFPVerificationResult result = Checker.verify(FingerPrintFeatureVerification, getTemplate());
+                    System.out.println("Enter database");
+                    if (result.isVerified()) {
+                        found = true;
+
+                        String staff_id =a1;
+
+                        jLabel2.setText(a2);
+                        jLabel3.setText(a3);
+                        String role = a4;
+                        String dept = a5;
+                        JOptionPane.showMessageDialog(rootPane, "Welcome "+ a2 + " "+ a3 +". Account signed in");
+
+                       // Reader.stopCapture();
+                        String full_name = a2+ " " +a3;
+                        if (role.equalsIgnoreCase("Co-ordinator")) {
+                                pc_work_page pc = new pc_work_page();
+                                pc.jLabel16.setText(full_name);
+                                pc.jLabel17.setText(staff_id);
+                                pc.jLabel18.setText(dept);
+                                pc.show();
+                                pc.setVisible(true);
+                                dispose();
+                            } else if (role.equalsIgnoreCase("Dean")) {
+                                dean d = new dean();
+                                dean.jLabel4.setText(full_name);
+                                dean.jLabel5.setText(staff_id);
+                                dean.jLabel6.setText(dept);
+                                d.show();
+                                d.setVisible(true);
+                                dispose();
+                            } else if (role.equalsIgnoreCase("HOD")) {
+                                hod_work_page hod = new hod_work_page();
+                                hod.jLabel13.setText(full_name);
+                                hod.jLabel14.setText(staff_id);
+                                hod.jLabel16.setText(dept);
+                                hod.show();
+                                hod.setVisible(true);
+                                dispose();
+                            }else if (role.equalsIgnoreCase("Lecturer")) {
+                                lecturer_page lect = new lecturer_page();
+                                lect.jLabel2.setText(full_name);
+                                lect.jLabel4.setText(staff_id);
+                                lect.jLabel6.setText(dept);
+                                lect.show();
+                                lect.setVisible(true);
+                                dispose();
+                            }else if (role.equalsIgnoreCase("Admin")) {
+                                admin_work_page ad = new admin_work_page();
+                                ad.show();
+                                ad.setVisible(true);
+                                dispose();
+                            }
+                    }
                     
-                    Reader.stopCapture();
-                    full_name = rs.getString(2) + " " +rs.getString(3);
-                    if (role.equalsIgnoreCase("Co-ordinator")) {
-                            pc_work_page pc = new pc_work_page();
-                            pc.jLabel16.setText(full_name);
-                            pc.jLabel17.setText(staff_id);
-                            pc.jLabel18.setText(dept);
-                            pc.show();
-                            pc.setVisible(true);
-                            dispose();
-                        } else if (role.equalsIgnoreCase("Dean")) {
-                            dean d = new dean();
-                            dean.jLabel4.setText(full_name);
-                            dean.jLabel5.setText(staff_id);
-                            dean.jLabel6.setText(dept);
-                            d.show();
-                            d.setVisible(true);
-                            dispose();
-                        } else if (role.equalsIgnoreCase("HOD")) {
-                            hod_work_page hod = new hod_work_page();
-                            hod.jLabel13.setText(full_name);
-                            hod.jLabel14.setText(staff_id);
-                            hod.jLabel16.setText(dept);
-                            hod.show();
-                            hod.setVisible(true);
-                            dispose();
-                        }else if (role.equalsIgnoreCase("Lecturer")) {
-                            lecturer_page lect = new lecturer_page();
-                            lect.jLabel2.setText(full_name);
-                            lect.jLabel4.setText(staff_id);
-                            lect.jLabel6.setText(dept);
-                            lect.show();
-                            lect.setVisible(true);
-                            dispose();
-                        }else if (role.equalsIgnoreCase("Admin")) {
-                            admin_work_page ad = new admin_work_page();
-                            ad.show();
-                            ad.setVisible(true);
-                            dispose();
-                        }
-                }
-
+                    
+                    
             }
 
+            }
+               con.close();
+               //Reader.stopCapture();
             if (!found) {
                 JOptionPane.showMessageDialog(rootPane, "No user found");
+                
             }
 
         } catch (Exception e) {
-            
+            JOptionPane.showMessageDialog(rootPane, e);
+            e.printStackTrace();
         }
     }
 
@@ -307,8 +334,12 @@ public class finger_login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(105, 210, 236));
+
+        jLabel2.setBackground(new java.awt.Color(105, 210, 236));
         jLabel2.setText("jLabel2");
 
+        jLabel3.setBackground(new java.awt.Color(105, 210, 236));
         jLabel3.setText("jLabel3");
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -332,10 +363,10 @@ public class finger_login extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(143, 143, 143))))
+                        .addComponent(jLabel2)
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,10 +375,10 @@ public class finger_login extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))))
                 .addGap(29, 29, 29)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(132, 132, 132))
@@ -363,7 +394,7 @@ public class finger_login extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 221, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
