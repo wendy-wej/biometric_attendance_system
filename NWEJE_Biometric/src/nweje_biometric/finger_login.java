@@ -23,15 +23,12 @@ import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
 import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import java.awt.Image;
-import java.awt.JobAttributes;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 /**
@@ -237,7 +234,7 @@ public class finger_login extends javax.swing.JFrame {
                     jLabel3.setText(rs.getString(3));
                     staff_id = rs.getString(1);
                     role = rs.getString(4);
-                    dept = rs.getString(5);
+                    dept = rs.getString(5); 
                     JOptionPane.showMessageDialog(rootPane, "Welcome "+ rs.getString(2) + " "+ rs.getString(3) +". Account signed in");
                     
                     Reader.stopCapture();
@@ -252,7 +249,9 @@ public class finger_login extends javax.swing.JFrame {
                             dispose();
                         } else if (role.equalsIgnoreCase("Dean")) {
                             dean d = new dean();
-                            
+                            dean.jLabel4.setText(full_name);
+                            dean.jLabel5.setText(staff_id);
+                            dean.jLabel6.setText(dept);
                             d.show();
                             d.setVisible(true);
                             dispose();
@@ -263,6 +262,19 @@ public class finger_login extends javax.swing.JFrame {
                             hod.jLabel16.setText(dept);
                             hod.show();
                             hod.setVisible(true);
+                            dispose();
+                        }else if (role.equalsIgnoreCase("Lecturer")) {
+                            lecturer_page lect = new lecturer_page();
+                            lect.jLabel2.setText(full_name);
+                            lect.jLabel4.setText(staff_id);
+                            lect.jLabel6.setText(dept);
+                            lect.show();
+                            lect.setVisible(true);
+                            dispose();
+                        }else if (role.equalsIgnoreCase("Admin")) {
+                            admin_work_page ad = new admin_work_page();
+                            ad.show();
+                            ad.setVisible(true);
                             dispose();
                         }
                 }

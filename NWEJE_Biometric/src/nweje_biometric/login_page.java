@@ -199,6 +199,9 @@ public class login_page extends javax.swing.JFrame {
                     dispose();
                 } else if (role.equalsIgnoreCase("Dean")) {
                     dean d = new dean();
+                    dean.jLabel4.setText(full_name);
+                    dean.jLabel5.setText(staff_id);
+                    dean.jLabel6.setText(dept);
                     d.show();
                     d.setVisible(true);
                     dispose();
@@ -209,6 +212,14 @@ public class login_page extends javax.swing.JFrame {
                     hod.jLabel16.setText(dept);
                     hod.show();
                     hod.setVisible(true);
+                    dispose();
+                }else if (role.equalsIgnoreCase("Lecturer")) {
+                    lecturer_page lect = new lecturer_page();
+                    lect.jLabel2.setText(full_name);
+                    lect.jLabel4.setText(staff_id);
+                    lect.jLabel6.setText(dept);
+                    lect.show();
+                    lect.setVisible(true);
                     dispose();
                 }else if (role.equalsIgnoreCase("Admin")) {
                     admin_work_page ad = new admin_work_page();

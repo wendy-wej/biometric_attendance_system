@@ -8,9 +8,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.concurrent.TimeUnit;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,6 +35,7 @@ public class hod_work_page extends javax.swing.JFrame {
 
     public hod_work_page() {
         initComponents();
+        
         showCourses();
     }
 
@@ -50,6 +53,19 @@ public class hod_work_page extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -72,6 +88,7 @@ public class hod_work_page extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -96,16 +113,116 @@ public class hod_work_page extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+
+        jLabel20.setText("Select Allocation ID");
+
+        jLabel21.setText("Course Name");
+
+        jLabel22.setText("Course Code");
+
+        jLabel23.setText("Lecturer Name");
+
+        jLabel24.setText("Lecturer ID");
+
+        jLabel25.setText("jLabel25");
+
+        jLabel26.setText("jLabel26");
+
+        jLabel27.setText("jLabel27");
+
+        jLabel28.setText("jLabel28");
+
+        jButton3.setText("View Attendance");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Matric No", "Percentage Attendance"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 807, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(42, 42, 42))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel22)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 474, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel25))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel26))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel23)
+                            .addComponent(jLabel27))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24)
+                            .addComponent(jLabel28))
+                        .addGap(60, 60, 60)
+                        .addComponent(jButton3))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("View Attendance", jPanel2);
@@ -241,7 +358,14 @@ public class hod_work_page extends javax.swing.JFrame {
 
         jLabel15.setText("Department");
 
-        jLabel16.setText("Basic Science");
+        jLabel16.setText(" ");
+
+        jButton2.setText("Operate as a Lecturer");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -253,7 +377,9 @@ public class hod_work_page extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel14))
+                        .addComponent(jLabel14)
+                        .addGap(356, 356, 356)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGap(28, 28, 28)
@@ -261,15 +387,13 @@ public class hod_work_page extends javax.swing.JFrame {
                         .addGap(118, 118, 118)
                         .addComponent(jLabel15)
                         .addGap(32, 32, 32)
-                        .addComponent(jLabel16)))
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(467, 467, 467)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 36, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,8 +407,9 @@ public class hod_work_page extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                    .addComponent(jLabel14)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -296,19 +421,19 @@ public class hod_work_page extends javax.swing.JFrame {
     public void showCourses() {
         String dept = jLabel16.getText();
         jLabel8.setText(dept);
-        String courses[];
-        courses = new String[100];
+        //String courses[];
+        //courses = new String[100];
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             DefaultComboBoxModel model = (DefaultComboBoxModel) jComboBox1.getModel();
+            
             model.removeAllElements();
+           
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
             PreparedStatement ps = con.prepareStatement("select * from course_list where department= ?");
-            //where department= ? 
             ps.setString(1, dept);
             //System.out.println(dept);
             ResultSet rs = ps.executeQuery();
-
             //int i = 0;
             while (rs.next()) {
                 String course_name = rs.getString(2);
@@ -317,9 +442,25 @@ public class hod_work_page extends javax.swing.JFrame {
                 model.addElement(course_name);
 
             }
-
             con.close();
         } catch (Exception e) {
+            System.err.println(e);
+        }
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            DefaultComboBoxModel model3 = (DefaultComboBoxModel) jComboBox3.getModel();
+            model3.removeAllElements();
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps2 = con.prepareStatement("select * from lecturer_allocation where dept= ?");
+            ps2.setString(1, dept);
+            ResultSet rs2 = ps2.executeQuery();
+            System.out.println("Before a_Loc loop");
+            while (rs2.next()) {
+                String a_loc_id = rs2.getString(1);
+                System.out.println(a_loc_id);
+                model3.addElement(a_loc_id);
+            }
+        }catch (Exception e) {
             System.err.println(e);
         }
 
@@ -328,7 +469,7 @@ public class hod_work_page extends javax.swing.JFrame {
             DefaultComboBoxModel model2 = (DefaultComboBoxModel) jComboBox2.getModel();
             model2.removeAllElements();
             Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
-            PreparedStatement ps2 = con2.prepareStatement("select * from all_staff_list where department=? ");
+            PreparedStatement ps2 = con2.prepareStatement("select * from staff_register_list where dept=? ");
             //String dep = jLabel16.getText();
             ps2.setString(1, dept);
             
@@ -371,16 +512,36 @@ public class hod_work_page extends javax.swing.JFrame {
             int rs = ps.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, l_name + " has been allocated to course:" + c_name + " with ID: " + allocate_id);
 
+            
+
+            con2.close();
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(rootPane, "You've allocated this lecturer to this course before!");
+            System.err.println(e);
+        }
+        
+        //Create Lesson_Count
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String allocate_id = jLabel2.getText();
+            Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps3 = con3.prepareStatement("insert into lesson_count values(?,?)");
+            ps3.setString(1, allocate_id);
+            ps3.setInt(2, 0);
+            
+            int rs = ps3.executeUpdate();
+            JOptionPane.showMessageDialog(rootPane,  allocate_id + " has been registered in 'Lesson Count' table");
+            
+            con3.close();
             jComboBox1.setSelectedIndex(0);
             jComboBox2.setSelectedIndex(0);
             jLabel2.setText(null);
             jLabel9.setText(null);
             jLabel8.setText(null);
             jLabel17.setText(null);
-
-            con2.close();
-        } catch (Exception e) {
+        }catch(Exception e) {
             System.err.println(e);
+            JOptionPane.showMessageDialog(rootPane,  "Duplicate Entry in 'Lesson Count' table");
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -404,11 +565,11 @@ public class hod_work_page extends javax.swing.JFrame {
             String l_name = (String) name_split[1];
             //System.out.println(l_name);
             //System.out.println("fname: " + f_name);
-            System.out.println("lname: " + l_name);
+            //System.out.println("lname: " + l_name);
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
-            PreparedStatement ps3 = con3.prepareStatement("select * from all_staff_list where staff_fname=? and staff_lname=?");
+            PreparedStatement ps3 = con3.prepareStatement("select * from staff_register_list where first_name=? and last_name=?");
             //and staff_lname=? 
          
 
@@ -420,7 +581,7 @@ public class hod_work_page extends javax.swing.JFrame {
                 //System.out.println("rs.nexting ");
                 
                 String staff_iding = rs3.getString(1);
-                System.out.println("staff:id: " + staff_iding);
+                //System.out.println("staff:id: " + staff_iding);
                 jLabel17.setText(staff_iding);
                 jLabel2.setText(jLabel9.getText()+"_"+jLabel17.getText()+"_"+l_name);
 
@@ -451,10 +612,9 @@ public class hod_work_page extends javax.swing.JFrame {
             ResultSet rs3 = ps3.executeQuery();
             
             while (rs3.next()) {
-                
-                
+     
                 String c_code = rs3.getString(1);
-                System.out.println("course_code: " + c_code);
+                //System.out.println("course_code: " + c_code);
                 jLabel9.setText(c_code);
 
             }
@@ -465,6 +625,94 @@ public class hod_work_page extends javax.swing.JFrame {
             System.err.println(e);
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        lecturer_page lect = new lecturer_page();
+        lect.jLabel2.setText(jLabel13.getText());
+        lect.jLabel4.setText(jLabel14.getText());
+        lect.jLabel6.setText(jLabel16.getText());
+        lect.show();
+        lect.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        showCourses();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+        try {
+            String alloc_id = (String) jComboBox3.getSelectedItem();
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps3 = con3.prepareStatement("select course_name, course_code, lect_last_name, staff_id from lecturer_allocation where allocate_id = ?");
+         
+            ps3.setString(1, alloc_id);  
+            ResultSet rs3 = ps3.executeQuery();
+            //System.out.println("Before loop");
+            while (rs3.next()) {
+
+                String c_name = rs3.getString("course_name");
+                String c_code = rs3.getString("course_code");
+                String l_l_name = rs3.getString("lect_last_name");
+                String lect_id = rs3.getString("staff_id");
+                jLabel25.setText(c_name);
+                jLabel26.setText(c_code);
+                jLabel27.setText(l_l_name);
+                jLabel28.setText(lect_id);
+            }    
+            con3.close();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try{
+            
+            String alloc_id = (String) jComboBox3.getSelectedItem();
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            DefaultTableModel td = (DefaultTableModel)jTable1.getModel();
+            Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps2 = con2.prepareStatement("select lesson_counter from lesson_count where allocate_id = ?");
+            System.out.println("first alloc:"+ alloc_id);
+            ps2.setString(1, alloc_id);  
+            ResultSet rs2 = ps2.executeQuery();
+            
+            while (rs2.next()) {
+                int total_classes_no = rs2.getInt("lesson_counter");
+                try{
+                    PreparedStatement ps3 = con2.prepareStatement("select * from course_registration_list where allocation_id = ?");
+                    String alloc_idi = (String) jComboBox3.getSelectedItem();
+                    ps3.setString(1, alloc_idi);
+                     System.out.println("second alloc:"+ alloc_idi);
+                    ResultSet rs3 = ps3.executeQuery();
+                    while (rs3.next()) {
+                        if(total_classes_no > 0){
+                            int attend_count = Integer.parseInt(rs3.getString(9));
+                            int personal_perc_attend = (attend_count/total_classes_no)*100;
+                            String perc_attend = personal_perc_attend + "%";
+                            td.addRow(new Object[] {rs3.getString(2), rs3.getString(1), perc_attend});
+                        }else{
+                            String zero_attend = "0";
+                            td.addRow(new Object[] {rs3.getString(2), rs3.getString(1), zero_attend});
+                        } 
+                    } 
+                }catch(Exception e){
+                    System.err.println(e);
+                    JOptionPane.showMessageDialog(rootPane, "Error with adding into 'lesson count' Database");
+                }
+                
+            }
+            
+        }catch(Exception e){
+            System.err.println(e);
+            JOptionPane.showMessageDialog(rootPane, "Error viewing Attendance");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,8 +751,11 @@ public class hod_work_page extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     public static javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -517,6 +768,15 @@ public class hod_work_page extends javax.swing.JFrame {
     public static javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -528,6 +788,8 @@ public class hod_work_page extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
