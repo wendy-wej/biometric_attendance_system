@@ -704,7 +704,7 @@ public void addPlaceHolder(JTextField jtextField) {
             jPasswordField1.setText(null);
             
             con.close();
-            Reader.stopCapture();
+            //Reader.stopCapture();
         } catch(Exception e){
             JOptionPane.showMessageDialog(rootPane, "ERROR: "+fname +" " + lname + " has been registered BEFORE"); 
             System.err.println(e);
