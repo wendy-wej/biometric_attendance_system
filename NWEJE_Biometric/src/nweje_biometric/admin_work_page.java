@@ -734,7 +734,7 @@ public void addPlaceHolder(JTextField jtextField) {
             while (rs.next()) {
                 jLabel14.setText(rs.getString(1));
                 jLabel15.setText(rs.getString(2));
-                jLabel15.setText(rs.getString(3));  
+                jLabel16.setText(rs.getString(3));  
             }
             //System.out.println(dept);
             con.close();
@@ -746,27 +746,21 @@ public void addPlaceHolder(JTextField jtextField) {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        try{
+        
             
             ByteArrayInputStream FingerPrintData = new ByteArrayInputStream(template.serialize());
             Integer FingerPrintSize = template.serialize().length;
             
-            fname = jTextField1.getText();
-            lname = jTextField2.getText();
-            role = jComboBox1.getSelectedItem().toString();
-            dept = jComboBox2.getSelectedItem().toString();
-            staff_id = jTextField3.getText();
-            password = jPasswordField1.getText();
+            fname = jLabel14.getText();
+            lname = jLabel15.getText();
+            staff_id = jTextField4.getText();
             
-         
+            
+         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema","root","password");
             PreparedStatement ps = con.prepareStatement("update staff_register_list set fingerprint=? where staff_id=?");
-            
-            
-            
-
-            
+ 
             ps.setBinaryStream(1, FingerPrintData, FingerPrintSize);
             ps.setString(2, staff_id);
             

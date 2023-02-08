@@ -67,6 +67,90 @@ public class attendance_panel extends javax.swing.JFrame {
     LocalDate today = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     String date_opened = today.format(formatter);
+    
+    public void registerStudent(){
+        String mat_no = (String) jLabel3.getText();
+        String alloc_id = (String) jLabel9.getText();
+        String dept = (String) jLabel8.getText();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //System.out.println("line before prepared statement ");
+            Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
+            PreparedStatement ps2 = con2.prepareStatement("select * from course_registration_list where matric_no =? and allocation_id = ?");
+            ps2.setString(1, mat_no);
+            ps2.setString(2, alloc_id);  
+            ResultSet rs2 = ps2.executeQuery();
+            
+            
+            if (rs2.next()) {
+                JOptionPane.showMessageDialog(rootPane, "Yayy, You've registered");
+                int old_counter = rs2.getInt(9);
+                System.out.println("old_counter: " +old_counter);
+                int new_counter = old_counter +1;
+                System.out.println("new_counter: " +new_counter); 
+                
+                
+                    PreparedStatement ps3 = con2.prepareStatement("update course_registration_list set attend_count=? where matric_no = ? and allocation_id = ?");
+                    ps3.setInt(1, new_counter);
+                    ps3.setString(2, mat_no);
+                    ps3.setString(3, alloc_id);
+                    int rs = ps3.executeUpdate();
+                    
+                    if (dept.contains("Electrical")){
+                        PreparedStatement ps4 = con2.prepareStatement("insert into expanded_electrical_attendance values (?,?,?,?,?,?,?,?)");
+                        ps4.setString(1, jLabel3.getText());
+                        ps4.setString(2, jLabel13.getText());
+                        ps4.setString(3, jLabel14.getText());
+                        ps4.setString(4, jLabel9.getText());
+                        ps4.setString(5, jLabel2.getText());
+                        ps4.setString(6, jLabel16.getText());
+                        ps4.setString(7, jLabel20.getText());
+                        ps4.setString(8, jLabel18.getText());
+                        
+                        rs = ps4.executeUpdate();
+                        System.out.println("expanded_electrical_attendance has been filled");
+                        
+                    }else if (dept.contains("Mechanical")){
+                        PreparedStatement ps4 = con2.prepareStatement("insert into expanded_mechanical_attendance values (?,?,?,?,?,?,?,?)");
+                        ps4.setString(1, jLabel3.getText());
+                        ps4.setString(2, jLabel13.getText());
+                        ps4.setString(3, jLabel14.getText());
+                        ps4.setString(4, jLabel9.getText());
+                        ps4.setString(5, jLabel2.getText());
+                        ps4.setString(6, jLabel16.getText());
+                        ps4.setString(7, jLabel20.getText());
+                        ps4.setString(8, jLabel18.getText());
+                        
+                        rs = ps4.executeUpdate();
+                        System.out.println("expanded_electrical_attendance has been filled");
+                    }else if (dept.contains("Computer Science")){
+                        PreparedStatement ps4 = con2.prepareStatement("insert into expanded_computer_science_attendance values (?,?,?,?,?,?,?,?)");
+                        ps4.setString(1, jLabel3.getText());
+                        ps4.setString(2, jLabel13.getText());
+                        ps4.setString(3, jLabel14.getText());
+                        ps4.setString(4, jLabel9.getText());
+                        ps4.setString(5, jLabel2.getText());
+                        ps4.setString(6, jLabel16.getText());
+                        ps4.setString(7, jLabel20.getText());
+                        ps4.setString(8, jLabel18.getText());
+                        
+                        rs = ps4.executeUpdate();
+                        System.out.println("expanded_computer_science_attendance has been filled");
+                    }   
+            
+                    //PreparedStatement ps4 = con2.prepareStatement("insert into log_table values (?,?,?,?)");
+                    
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "You are not enrolled for this course");
+            }       
+        }catch(Exception e){
+            System.err.println(e);
+            JOptionPane.showMessageDialog(rootPane, "Error!!!!");
+        }
+    }
+    
+    
+    
 
     public void DisplayMsg(String message) {
         jLabel4.setText(message);
@@ -552,83 +636,55 @@ public class attendance_panel extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:   
-        String mat_no = (String) jLabel3.getText();
-        String alloc_id = (String) jLabel9.getText();
-        String dept = (String) jLabel8.getText();
-        try{
+        String dept = jLabel8.getText();
+        String mat_no = jLabel3.getText();
+        String lesson_id = jLabel6.getText();
+     
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //System.out.println("line before prepared statement ");
             Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/biometric_attendance_schema", "root", "password");
-            PreparedStatement ps2 = con2.prepareStatement("select * from course_registration_list where matric_no =? and allocation_id = ?");
-            ps2.setString(1, mat_no);
-            ps2.setString(2, alloc_id);  
-            ResultSet rs2 = ps2.executeQuery();
             
-            
-            if (rs2.next()) {
-                JOptionPane.showMessageDialog(rootPane, "Yayy, You've registered");
-                int old_counter = rs2.getInt(9);
-                System.out.println("old_counter: " +old_counter);
-                int new_counter = old_counter +1;
-                System.out.println("new_counter: " +new_counter); 
-                
-                
-                    PreparedStatement ps3 = con2.prepareStatement("update course_registration_list set attend_count=? where matric_no = ? and allocation_id = ?");
-                    ps3.setInt(1, new_counter);
-                    ps3.setString(2, mat_no);
-                    ps3.setString(3, alloc_id);
-                    int rs = ps3.executeUpdate();
-                    
-                    if (dept.contains("Electrical")){
-                        PreparedStatement ps4 = con2.prepareStatement("insert into expanded_electrical_attendance values (?,?,?,?,?,?,?,?)");
-                        ps4.setString(1, jLabel3.getText());
-                        ps4.setString(2, jLabel13.getText());
-                        ps4.setString(3, jLabel14.getText());
-                        ps4.setString(4, jLabel9.getText());
-                        ps4.setString(5, jLabel2.getText());
-                        ps4.setString(6, jLabel16.getText());
-                        ps4.setString(7, jLabel20.getText());
-                        ps4.setString(8, jLabel18.getText());
-                        
-                        rs = ps4.executeUpdate();
-                        System.out.println("expanded_electrical_attendance has been filled");
-                        
-                    }else if (dept.contains("Mechanical")){
-                        PreparedStatement ps4 = con2.prepareStatement("insert into expanded_mechanical_attendance values (?,?,?,?,?,?,?,?)");
-                        ps4.setString(1, jLabel3.getText());
-                        ps4.setString(2, jLabel13.getText());
-                        ps4.setString(3, jLabel14.getText());
-                        ps4.setString(4, jLabel9.getText());
-                        ps4.setString(5, jLabel2.getText());
-                        ps4.setString(6, jLabel16.getText());
-                        ps4.setString(7, jLabel20.getText());
-                        ps4.setString(8, jLabel18.getText());
-                        
-                        rs = ps4.executeUpdate();
-                        System.out.println("expanded_electrical_attendance has been filled");
-                    }else if (dept.contains("Computer Science")){
-                        PreparedStatement ps4 = con2.prepareStatement("insert into expanded_computer_science_attendance values (?,?,?,?,?,?,?,?)");
-                        ps4.setString(1, jLabel3.getText());
-                        ps4.setString(2, jLabel13.getText());
-                        ps4.setString(3, jLabel14.getText());
-                        ps4.setString(4, jLabel9.getText());
-                        ps4.setString(5, jLabel2.getText());
-                        ps4.setString(6, jLabel16.getText());
-                        ps4.setString(7, jLabel20.getText());
-                        ps4.setString(8, jLabel18.getText());
-                        
-                        rs = ps4.executeUpdate();
-                        System.out.println("expanded_computer_science_attendance has been filled");
-                    }   
-            
-                    //PreparedStatement ps4 = con2.prepareStatement("insert into log_table values (?,?,?,?)");
-                    
+            if (dept.contains("Electrical")) {
+            PreparedStatement ps4 = con2.prepareStatement("select * from expanded_electrical_attendance where matric_no =? and  lesson_id=?");
+            ps4.setString(1, mat_no);
+            ps4.setString(2, lesson_id);
+            ResultSet rs4 = ps4.executeQuery();
+            if(!rs4.next()){
+                registerStudent();
             }else{
-                JOptionPane.showMessageDialog(rootPane, "You are not enrolled for this course");
-            }       
-        }catch(Exception e){
-            System.err.println(e);
-            JOptionPane.showMessageDialog(rootPane, "Error!!!!");
+                JOptionPane.showMessageDialog(rootPane, "You have already registered");
+            }
+         
+        } else if (dept.contains("Mechanical")) {
+            PreparedStatement ps4 = con2.prepareStatement("select * from expanded_mechanical_attendance where matric_no =? and  lesson_id=?");
+            ps4.setString(1, mat_no);
+            ps4.setString(2, lesson_id);
+            ResultSet rs4 = ps4.executeQuery();
+            if(!rs4.next()){
+                registerStudent();
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "You have already registered");
+            }
+
+        } else if (dept.contains("Computer Science")) {
+            PreparedStatement ps4 = con2.prepareStatement("select * from expanded_computer_science_attendance where matric_no =? and lesson_id=?");
+            ps4.setString(1, mat_no);
+            ps4.setString(2, lesson_id);
+            ResultSet rs4 = ps4.executeQuery();
+            if(!rs4.next()){
+                registerStudent();
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "You have already registered");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Student is not registered");
+            System.out.println("Student is not registered");
+        }
+            
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

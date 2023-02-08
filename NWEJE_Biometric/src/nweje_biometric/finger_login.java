@@ -232,7 +232,6 @@ String a9=null;
             ResultSet rs = ps.executeQuery();
               System.out.println("Before rs.next");
             while (rs.next()) {
-                 System.out.println("Inside rs.next");
                     a1= rs.getString(1);
                     a2=rs.getString(2);
                     a3=rs.getString(3);
@@ -240,12 +239,10 @@ String a9=null;
                     a5=rs.getString(5);
                 byte templateBuffer[] = rs.getBytes(7);
                 if(templateBuffer!=null){
-                    System.out.println("Inside rs.next 2");
                     DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
                     setTemplate(referenceTemplate);
 
                     DPFPVerificationResult result = Checker.verify(FingerPrintFeatureVerification, getTemplate());
-                    System.out.println("Enter database");
                     if (result.isVerified()) {
                         found = true;
 
@@ -260,6 +257,7 @@ String a9=null;
                        // Reader.stopCapture();
                         String full_name = a2+ " " +a3;
                         if (role.equalsIgnoreCase("Co-ordinator")) {
+                                stop();
                                 pc_work_page pc = new pc_work_page();
                                 pc.jLabel16.setText(full_name);
                                 pc.jLabel17.setText(staff_id);
@@ -268,6 +266,7 @@ String a9=null;
                                 pc.setVisible(true);
                                 dispose();
                             } else if (role.equalsIgnoreCase("Dean")) {
+                                stop();
                                 dean d = new dean();
                                 dean.jLabel4.setText(full_name);
                                 dean.jLabel5.setText(staff_id);
@@ -276,6 +275,7 @@ String a9=null;
                                 d.setVisible(true);
                                 dispose();
                             } else if (role.equalsIgnoreCase("HOD")) {
+                                stop();
                                 hod_work_page hod = new hod_work_page();
                                 hod.jLabel13.setText(full_name);
                                 hod.jLabel14.setText(staff_id);
@@ -284,6 +284,7 @@ String a9=null;
                                 hod.setVisible(true);
                                 dispose();
                             }else if (role.equalsIgnoreCase("Lecturer")) {
+                                stop();
                                 lecturer_page lect = new lecturer_page();
                                 lect.jLabel2.setText(full_name);
                                 lect.jLabel4.setText(staff_id);
@@ -292,6 +293,7 @@ String a9=null;
                                 lect.setVisible(true);
                                 dispose();
                             }else if (role.equalsIgnoreCase("Admin")) {
+                                stop();
                                 admin_work_page ad = new admin_work_page();
                                 ad.show();
                                 ad.setVisible(true);
@@ -305,7 +307,7 @@ String a9=null;
 
             }
                con.close();
-               //Reader.stopCapture();
+              
             if (!found) {
                 JOptionPane.showMessageDialog(rootPane, "No user found");
                 
